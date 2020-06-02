@@ -73,12 +73,12 @@ export interface ApplicationOptions<S> {
   keys?: KeyStack | Key[];
 
   /** The `server()` function to be used to read requests.
-   * 
+   *
    * _Not used generally, as this is just for mocking for test purposes_ */
   serve?: typeof defaultServe;
 
   /** The `server()` function to be used to read requests.
-   * 
+   *
    * _Not used generally, as this is just for mocking for test purposes_ */
   serveTls?: typeof defaultServeTls;
 
@@ -149,11 +149,11 @@ export class Application<AS extends State = Record<string, any>>
    * generic argument when constructing:
    *
    *       const app = new Application<{ foo: string }>();
-   * 
+   *
    * Or can be contextually inferred based on setting an initial state object:
-   * 
+   *
    *       const app = new Application({ state: { foo: "bar" } });
-   * 
+   *
    */
   state: AS;
 
@@ -223,7 +223,9 @@ export class Application<AS extends State = Record<string, any>>
       }
     }
     try {
-      await request.respond(context.response.toServerResponse());
+      const x = context.response.toServerResponse()
+      // console.info('xxxx==> ',x);
+      await request.respond(x);
       if (state.closing) {
         state.server.close();
         state.closed = true;
@@ -278,6 +280,7 @@ export class Application<AS extends State = Record<string, any>>
       options = { hostname, port: parseInt(portStr, 10) };
     }
     const middleware = compose(this.#middleware);
+    console.info('listen=> middleware==>',middleware);
     const server = isOptionsTls(options)
       ? this.#serveTls(options)
       : this.#serve(options);

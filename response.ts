@@ -139,20 +139,20 @@ export class Response {
   }
 
   /** Sets the response to redirect to the supplied `url`.
-   * 
+   *
    * If the `.status` is not currently a redirect status, the status will be set
    * to `302 Found`.
-   * 
+   *
    * The body will be set to a message indicating the redirection is occurring.
    */
   redirect(url: string | URL): void;
   /** Sets the response to redirect back to the referrer if available, with an
    * optional `alt` URL if there is no referrer header on the request.  If there
    * is no referrer header, nor an `alt` parameter, the redirect is set to `/`.
-   * 
+   *
    * If the `.status` is not currently a redirect status, the status will be set
    * to `302 Found`.
-   * 
+   *
    * The body will be set to a message indicating the redirection is occurring.
    */
   redirect(url: typeof REDIRECT_BACK, alt?: string | URL): void;
